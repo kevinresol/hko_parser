@@ -1,5 +1,8 @@
 package hko;
 
+/**
+ *  Parses the text document at http://www.hko.gov.hk/textonly/v2/forecast/text_readings_e.htm
+ */
 class RegionalWeather {
 	public function new() {}
 	

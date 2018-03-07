@@ -10,6 +10,7 @@ class RegionalWeather {
 		var start = html.indexOf('<pre>');
 		var end = html.indexOf('</pre>');
 		var text = html.substring(start + 5, end);
+		if(text.charCodeAt(0) == '\n'.code) text = text.substr(1);
 		return parse(text);
 	}
 	
@@ -205,6 +206,7 @@ class RegionalWeather {
 			case 'northeast': Northeast;
 			case 'northwest': Northwest;
 			case 'n/a': NotAvailable;
+			case 'variable': Variable;
 			case _: throw 'Unrecognized wind direction "$v"';
 		}
 	}
@@ -219,5 +221,6 @@ enum WindDirection {
 	Southwest;
 	Northeast;
 	Northwest;
+	Variable;
 	NotAvailable;
 }

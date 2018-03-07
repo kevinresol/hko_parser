@@ -9,7 +9,6 @@ class RunTests {
     Runner.run(TestBatch.make([
       new RegionalWeatherTest(),
     ])).handle(Runner.exit);
-    
   }
   
 }

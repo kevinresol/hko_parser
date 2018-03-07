@@ -61,6 +61,22 @@ class RegionalWeatherTest {
 		asserts.assert(result.solar[0].direct == 1.0);
 		asserts.assert(result.solar[0].diffused == 227.0);
 		
+		
+		// check station info
+		var stations = [];
+		function add(v:Array<{station:String}>) for(v in v) if(stations.indexOf(v.station) == -1) stations.push(v.station);
+		add(result.temperature);
+		add(result.wind);
+		add(result.pressure);
+		add(result.visibility);
+		add(result.solar);
+		
+		for(s in stations)
+			switch hko.Stations.get(s) {
+				case null: asserts.fail('Cannot find station info for "$s"');
+				case v: // ok
+			}
+		
 		return asserts.done();
 	}
 }

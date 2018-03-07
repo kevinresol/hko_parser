@@ -1,0 +1,216 @@
+
+<!-- saved from url=(0062)http://www.hko.gov.hk/textonly/v2/forecast/text_readings_e.htm -->
+<html lang="en"><script>(function main() {
+    // Create enabled event
+    function fireEnabledEvent() {
+        // If gli exists, then we are already present and shouldn't do anything
+        if (!window.gli) {
+            setTimeout(function () {
+                var enabledEvent = document.createEvent("Event");
+                enabledEvent.initEvent("WebGLEnabledEvent", true, true);
+                document.dispatchEvent(enabledEvent);
+            }, 0);
+        } else {
+            //console.log("WebGL Inspector already embedded on the page - disabling extension");
+        }
+    };
+
+    // Grab the path root from the extension
+    document.addEventListener("WebGLInspectorReadyEvent", function (e) {
+        var pathElement = document.getElementById("__webglpathroot");
+        if (window["gliloader"]) {
+            gliloader.pathRoot = pathElement.innerText;
+        } else {
+            // TODO: more?
+            window.gliCssUrl = pathElement.innerText + "gli.all.css";
+        }
+    }, false);
+
+    // Rewrite getContext to snoop for webgl
+    var originalGetContext = HTMLCanvasElement.prototype.getContext;
+    if (!HTMLCanvasElement.prototype.getContextRaw) {
+        HTMLCanvasElement.prototype.getContextRaw = originalGetContext;
+    }
+    HTMLCanvasElement.prototype.getContext = function () {
+        var ignoreCanvas = this.internalInspectorSurface;
+        if (ignoreCanvas) {
+            return originalGetContext.apply(this, arguments);
+        }
+
+        var result = originalGetContext.apply(this, arguments);
+        if (result == null) {
+            return null;
+        }
+
+        var contextNames = ["moz-webgl", "webkit-3d", "experimental-webgl", "webgl", "3d"];
+        var requestingWebGL = contextNames.indexOf(arguments[0]) != -1;
+        if (requestingWebGL) {
+            // Page is requesting a WebGL context!
+            fireEnabledEvent(this);
+
+            // If we are injected, inspect this context
+            if (window.gli) {
+                if (gli.host.inspectContext) {
+                    // TODO: pull options from extension
+                    result = gli.host.inspectContext(this, result);
+                    // NOTE: execute in a timeout so that if the dom is not yet
+                    // loaded this won't error out.
+                    window.setTimeout(function() {
+                        var hostUI = new gli.host.HostUI(result);
+                        result.hostUI = hostUI; // just so we can access it later for debugging
+                    }, 0);
+                }
+            }
+        }
+
+        return result;
+    };
+})();</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Comments" content="WCAG2.0_Verified">
+<meta name="Keywords" content="Regional Weather Hong Kong">
+<meta name="Page Author" content="HKO">
+
+
+<title>Regional Weather in Hong Kong</title>
+
+
+
+
+</head>
+<body>
+
+<script type="text/javascript" src="./regional_weather_files/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="./regional_weather_files/clf_textonly.js"></script>
+<style><!-- BODY{font-family="Courier New"} --></style>
+
+<title>Regional Weather in Hong Kong</title>
+<style type="text/css">
+ #wcag_logo_area{ display:inline; text-align: center; }
+ #wcag_logo_area a img{ border:	0px; position:relative; top:12px; }
+ </style>
+<div align="center"><p><img src="./regional_weather_files/logo_dblue.gif" alt="Hong Kong Observatory logo"></p></div>
+<span style="color:blue;"><div style="font-size:150%;font-weight:bold;text-align:center;padding-top:3px;padding-bottom:3px;">Regional Weather in Hong Kong</div></span>
+<p><span style="font-family:Courier;"></span></p><pre>Latest readings recorded at 14:50 Hong Kong Time 7 March 2018
+
+                               Air     Relative   Maximum/Minimum   Grass           Minimum Grass
+                         Temperature   Humidity   Air Temperature   Temperature     Temperature Since
+                                                  Since Midnight                    5 p.m. Yesterday
+                                                  ( 7 Mar 2018)                     Till 8 a.m. Today
+                     (degree Celsius) (percent)   (degree Celsius) (degree Celsius) (degree Celsius)
+Chek Lap Kok                   23.1       63        24.0 / 18.1                       
+Cheung Chau                    21.0       77        21.0 / 17.1                       
+Happy Valley                   20.5      N/A        21.0 / 17.5                       
+HK Observatory                 20.5       74        20.6 / 17.6                       
+HK Park                        19.8      N/A        20.0 / 17.4                       
+Kai Tak Runway Park            19.3      N/A        19.3 / 17.7                       
+Kau Sai Chau                   19.3       76        19.3 / 16.2                       
+King's Park                    20.2       73        20.7 / 16.9                      17.1   
+Kowloon City                   21.5      N/A        21.5 / 17.0                       
+Kwun Tong                      19.2      N/A        19.2 / 16.7                       
+Lau Fau Shan                   24.2       59        24.9 / 16.4                       
+Ngong Ping                     22.0      N/A        22.1 / 13.5                       
+Pak Tam Chung                  20.8      N/A        20.8 / 17.1                       
+Peng Chau                      20.6       78        20.9 / 17.4                       
+Sai Kung                       19.2       80        19.2 / 17.4                       
+Sha Tin                        20.3       74        20.8 / 17.3                       
+Sham Shui Po                   21.6      N/A        22.0 / 17.9                       
+Shau Kei Wan                   18.6      N/A        18.7 / 16.8                       
+Shek Kong                      24.0       66        24.1 / 17.7                       
+Sheung Shui                    21.9       71        21.9 / 17.2                       
+Stanley                        19.0      N/A        19.3 / 17.0                       
+Ta Kwu Ling                    21.7       66        21.7 / 17.0                      16.9   
+Tai Mei Tuk                    20.7      N/A        20.8 / 16.9                       
+Tai Mo Shan                    17.8      N/A        19.3 / 10.3                      10.6   
+Tai Po                         19.5       78        19.5 / 17.6                       
+Tate's Cairn                   14.6      N/A        14.7 / 11.5                       
+The Peak                       18.8      N/A        19.2 / 14.0                       
+Tseung Kwan O                  19.1       76        19.4 / 16.9                       
+Tsing Yi                       21.8       66        21.8 / 17.9                       
+Tsuen Wan Ho Koon              21.1       73        21.7 / 16.8                       
+Tsuen Wan Shing Mun Valley     21.4       72        21.4 / 17.6                       
+Tuen Mun                       22.0       69        22.6 / 17.7                       
+Waglan Island                  17.8       79        18.1 / 16.8                       
+Wetland Park                   22.8       65        23.2 / 17.3                       
+Wong Chuk Hang                 21.9       69        21.9 / 17.4                       
+Wong Tai Sin                   20.3      N/A        20.4 / 17.1                       
+Yuen Long Park                 25.0      N/A        25.1 / 17.6                       
+
+10-Minute Mean Wind Direction, Speed and Maximum Gust (km/hour)
+Chek Lap Kok          East          24    32
+Cheung Chau           Northeast     17    22
+Cheung Chau Beach     Northeast     24    27
+Green Island          Northeast     31    34
+Kai Tak               East          14    26
+King's Park           East           9    19
+Lau Fau Shan          Northeast     14    26
+Ngong Ping            N/A           N/A   N/A
+Peng Chau             East          23    26
+Sai Kung              South          6    11
+Sha Chau              Southeast     20    26
+Sha Tin               North          7    12
+Shek Kong             East           9    15
+Stanley               Northeast     17    29
+Star Ferry            East          16    24
+Ta Kwu Ling           Northeast     11    19
+Tai Mei Tuk           East           5     8
+Tai Po Kau            Northeast     10    12
+Tap Mun               Southeast      7    11
+Tate's Cairn          East          22    25
+Tseung Kwan O         North          9    14
+Tsing Yi              Southeast      9    16
+Tuen Mun              Southeast     11    20
+Waglan Island         Northeast     30    35
+Wetland Park          Northeast     12    22
+Wong Chuk Hang        Northeast      4    12
+
+Mean Sea Level Pressure (hPa)
+Chek Lap Kok           1014.7
+Cheung Chau            1014.5
+HK Observatory         1015.0
+Lau Fau Shan           1013.7
+Peng Chau              1014.7
+Sha Tin                1014.8
+Shek Kong              1014.6
+Sheung Shui            1014.8
+Ta Kwu Ling            1015.2
+Tai Po                 1014.2
+Waglan Island          1015.3
+Wetland Park           1014.6
+
+10-Minute Mean Visibility
+Central             9 km
+Chek Lap Kok       18 km
+Sai Wan Ho         16 km
+Waglan Island      12 km
+
+               Global Solar       Direct Solar       Diffuse Solar
+              Radiation (W/m<sup>2</sup>)   Radiation (W/m<sup>2</sup>)   Radiation (W/m<sup>2</sup>)
+Kau Sai Chau      233.0                1.0              225.0             
+King's Park       385.0                3.0              363.0             
+
+N/A - data not available
+The data displayed is provisional. Only limited data validation has been carried out. 
+</pre>
+<div align="center">| &nbsp;<a href="http://www.hko.gov.hk/wxinfo/ts/explain_e.htm#temperature" title="Explanatory note for air temperature and relative humidity readings">Explanatory note</a> &nbsp;| &nbsp;<a href="http://www.weather.gov.hk/textonly/v2/forecast/text_readings_c.htm"><img src="./regional_weather_files/tra_chinese.gif" border="0" alt="Traditional Chinese version" title="Traditional Chinese version"></a> &nbsp;| &nbsp;<a href="http://gb.weather.gov.hk/textonly/v2/forecast/text_readings_c.htm"><img src="./regional_weather_files/sim_chinese.gif" border="0" alt="Simplified Chinese version" title="Simplified Chinese version"></a> &nbsp;| &nbsp;<a href="http://www.weather.gov.hk/textonly/v2/forecast/text_readings_e.htm">English version</a> &nbsp;<div id="wcag_logo_area"><a href="http://www.w3.org/WAI/WCAG2AA-Conformance" target="_blank"><img src="./regional_weather_files/w3c_wcag2.0.gif" alt="遵守2A級無障礙圖示，萬維網聯盟（W3C）- 無障礙網頁倡議（WAI） Web Content Accessibility Guidelines 2.0"></a></div> </div>
+
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+	var url1 = document.location.toString();
+	if(url1.indexOf("\/v2\/") > -1) {
+		$("img[src*='tra_chinese']").attr("src", "http://www.hko.gov.hk/wxinfo/ts/tra_chinese.gif");
+		$("img[src*='sim_chinese']").attr("src", "http://www.hko.gov.hk/wxinfo/ts/sim_chinese.gif");
+		$("a[href*='wxinfo\/ts\/']").each( function() {
+			$(this).attr('href', $(this).attr('href').replace('wxinfo\/ts', 'textonly\/v2\/forecast'));
+		});
+		if(url1.indexOf("gb.weather") == -1)
+			$("a[href*='explain']").attr("href", "http://www.hko.gov.hk/wxinfo/ts/" + $("a[href*='explain']").attr("href"));
+		else
+			$("a[href*='explain']").attr('href', $("a[href*='explain']").attr('href').replace('textonly\/v2\/forecast', 'wxinfo\/ts'));
+	}
+});
+</script>
+
+
+<script src="chrome-extension://hhojmcideegachlhfgfdhailpfhgknjm/web_accessible_resources/index.js"></script><span style="border-radius: 3px; text-indent: 20px; width: auto; padding: 0px 4px 0px 0px; text-align: center; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 11px; line-height: 20px; font-family: &quot;Helvetica Neue&quot;, Helvetica, sans-serif; color: rgb(255, 255, 255); background: url(&quot;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMzBweCIgd2lkdGg9IjMwcHgiIHZpZXdCb3g9Ii0xIC0xIDMxIDMxIj48Zz48cGF0aCBkPSJNMjkuNDQ5LDE0LjY2MiBDMjkuNDQ5LDIyLjcyMiAyMi44NjgsMjkuMjU2IDE0Ljc1LDI5LjI1NiBDNi42MzIsMjkuMjU2IDAuMDUxLDIyLjcyMiAwLjA1MSwxNC42NjIgQzAuMDUxLDYuNjAxIDYuNjMyLDAuMDY3IDE0Ljc1LDAuMDY3IEMyMi44NjgsMC4wNjcgMjkuNDQ5LDYuNjAxIDI5LjQ0OSwxNC42NjIiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+PHBhdGggZD0iTTE0LjczMywxLjY4NiBDNy41MTYsMS42ODYgMS42NjUsNy40OTUgMS42NjUsMTQuNjYyIEMxLjY2NSwyMC4xNTkgNS4xMDksMjQuODU0IDkuOTcsMjYuNzQ0IEM5Ljg1NiwyNS43MTggOS43NTMsMjQuMTQzIDEwLjAxNiwyMy4wMjIgQzEwLjI1MywyMi4wMSAxMS41NDgsMTYuNTcyIDExLjU0OCwxNi41NzIgQzExLjU0OCwxNi41NzIgMTEuMTU3LDE1Ljc5NSAxMS4xNTcsMTQuNjQ2IEMxMS4xNTcsMTIuODQyIDEyLjIxMSwxMS40OTUgMTMuNTIyLDExLjQ5NSBDMTQuNjM3LDExLjQ5NSAxNS4xNzUsMTIuMzI2IDE1LjE3NSwxMy4zMjMgQzE1LjE3NSwxNC40MzYgMTQuNDYyLDE2LjEgMTQuMDkzLDE3LjY0MyBDMTMuNzg1LDE4LjkzNSAxNC43NDUsMTkuOTg4IDE2LjAyOCwxOS45ODggQzE4LjM1MSwxOS45ODggMjAuMTM2LDE3LjU1NiAyMC4xMzYsMTQuMDQ2IEMyMC4xMzYsMTAuOTM5IDE3Ljg4OCw4Ljc2NyAxNC42NzgsOC43NjcgQzEwLjk1OSw4Ljc2NyA4Ljc3NywxMS41MzYgOC43NzcsMTQuMzk4IEM4Ljc3NywxNS41MTMgOS4yMSwxNi43MDkgOS43NDksMTcuMzU5IEM5Ljg1NiwxNy40ODggOS44NzIsMTcuNiA5Ljg0LDE3LjczMSBDOS43NDEsMTguMTQxIDkuNTIsMTkuMDIzIDkuNDc3LDE5LjIwMyBDOS40MiwxOS40NCA5LjI4OCwxOS40OTEgOS4wNCwxOS4zNzYgQzcuNDA4LDE4LjYyMiA2LjM4NywxNi4yNTIgNi4zODcsMTQuMzQ5IEM2LjM4NywxMC4yNTYgOS4zODMsNi40OTcgMTUuMDIyLDYuNDk3IEMxOS41NTUsNi40OTcgMjMuMDc4LDkuNzA1IDIzLjA3OCwxMy45OTEgQzIzLjA3OCwxOC40NjMgMjAuMjM5LDIyLjA2MiAxNi4yOTcsMjIuMDYyIEMxNC45NzMsMjIuMDYyIDEzLjcyOCwyMS4zNzkgMTMuMzAyLDIwLjU3MiBDMTMuMzAyLDIwLjU3MiAxMi42NDcsMjMuMDUgMTIuNDg4LDIzLjY1NyBDMTIuMTkzLDI0Ljc4NCAxMS4zOTYsMjYuMTk2IDEwLjg2MywyNy4wNTggQzEyLjA4NiwyNy40MzQgMTMuMzg2LDI3LjYzNyAxNC43MzMsMjcuNjM3IEMyMS45NSwyNy42MzcgMjcuODAxLDIxLjgyOCAyNy44MDEsMTQuNjYyIEMyNy44MDEsNy40OTUgMjEuOTUsMS42ODYgMTQuNzMzLDEuNjg2IiBmaWxsPSIjYmQwODFjIj48L3BhdGg+PC9nPjwvc3ZnPg==&quot;) 3px 50% / 14px 14px no-repeat rgb(189, 8, 28); position: absolute; opacity: 1; z-index: 8675309; display: none; cursor: pointer; border: none; -webkit-font-smoothing: antialiased;">Save</span><span style="width: 24px; height: 24px; background: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxtYXNrIGlkPSJtIj48cmVjdCBmaWxsPSIjZmZmIiB4PSIwIiB5PSIwIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHJ4PSI2IiByeT0iNiIvPjxyZWN0IGZpbGw9IiMwMDAiIHg9IjUiIHk9IjUiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcng9IjEiIHJ5PSIxIi8+PHJlY3QgZmlsbD0iIzAwMCIgeD0iMTAiIHk9IjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjI0Ii8+PHJlY3QgZmlsbD0iIzAwMCIgeD0iMCIgeT0iMTAiIHdpZHRoPSIyNCIgaGVpZ2h0PSI0Ii8+PC9tYXNrPjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmYiIG1hc2s9InVybCgjbSkiLz48L3N2Zz4=&quot;) 50% 50% / 14px 14px no-repeat rgba(0, 0, 0, 0.4); position: absolute; opacity: 1; z-index: 8675309; display: none; cursor: pointer; border: none; border-radius: 12px;"></span></body></html>

@@ -5,10 +5,19 @@ import sys.io.File;
 
 @:asserts
 class RegionalWeatherTest {
+	var parser = new RegionalWeather();
 	public function new() {}
 	
+	public function parseHtml() {
+		
+		var result = parser.parseHtml(File.getContent('tests/regional_weather.html'));
+		asserts.assert(result.date.getTime() == new Date(2018, 2, 7, 14, 50, 0).getTime());
+		
+		return asserts.done();
+		
+	}
+	
 	public function parse() {
-		var parser = new RegionalWeather();
 		var result = parser.parse(File.getContent('tests/regional_weather.txt'));
 		// trace(result);
 		

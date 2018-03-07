@@ -6,6 +6,13 @@ package hko;
 class RegionalWeather {
 	public function new() {}
 	
+	public function parseHtml(html:String) {
+		var start = html.indexOf('<pre>');
+		var end = html.indexOf('</pre>');
+		var text = html.substring(start + 5, end);
+		return parse(text);
+	}
+	
 	public function parse(v:String) {
 		var lines = v.split('\n');
 		

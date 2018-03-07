@@ -1,0 +1,12 @@
+{
+  "name": "hko_parser",
+  "classPath": "src",
+  "dependencies": {},
+  "contributors": [
+    "kevinresol"
+  ],
+  "tags": [],
+  "version": "0.0.0",
+  "license": "MIT",
+  "releasenote": "initial release"
+}

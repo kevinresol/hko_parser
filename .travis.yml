@@ -1,0 +1,15 @@
+sudo: required
+dist: trusty
+
+language: node_js
+node_js: 6
+
+os:
+  - linux
+  - osx
+  
+install:
+  - npm install -g travlix
+
+script:
+  - travlix run --haxe 3.4.4 --target node,cpp,php,java,cs,lua,interp
